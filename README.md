@@ -25,7 +25,7 @@ $ bin/kafka-server-start.sh config/server.properties
 
 - Clone the repo: 
 
-$ git clone https://github.com/professorfabio/CMU-StarterProject
+$ git clone https://github.com/DistributedSystems-UFG/atividade-de-programacao-seguranca---parte-1-Adrm00
 - Compile the interface (protocol buffer definition):
 
 $ cd CloudCode/python
@@ -52,7 +52,7 @@ $ pip3 install kafka-python
 
 - Clone the repo:
 
-$ git clone https://github.com/professorfabio/CMU-StarterProject
+$ git clone https://github.com/DistributedSystems-UFG/atividade-de-programacao-seguranca---parte-1-Adrm00
 
 (If necessary, install git)
 
@@ -66,7 +66,7 @@ $ python3 device-controller.py
 
 - Clone the repo:
 
-$ git clone https://github.com/professorfabio/CMU-StarterProject
+$ git clone https://github.com/DistributedSystems-UFG/atividade-de-programacao-seguranca---parte-1-Adrm00
 
 - Compile the interface:
 
