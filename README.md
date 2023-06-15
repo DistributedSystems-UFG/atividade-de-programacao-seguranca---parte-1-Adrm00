@@ -76,10 +76,11 @@ $ python3 -m grpc_tools.protoc -I../protos --python_out=. --grpc_python_out=. ..
 
 - Run the client code (for led control and thermometer access)
 
-$ python3 thermometer_client.py
+$ python3 thermometer_client.py 'user' 'password'
 
-$ python3 led_client.py 1 red  --or-- $ python3 led_client.py 0 red (turn on and off, respectively. Just examples)
+$ python3 led_client.py 1 red 'user' 'password'  --or-- $ python3 led_client.py 0 red 'user' 'password' (turn on and off, respectively. Just examples)
 
+(Use registered 'user' and 'password' in gRPC for authentication)
 (If necessary, edit the const.py file with the **public** IP address of the gRPC server -- server-2)
 
 ## Overall structure of the system
