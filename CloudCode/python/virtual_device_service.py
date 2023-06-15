@@ -9,6 +9,50 @@ import grpc
 import iot_service_pb2
 import iot_service_pb2_grpc
 
+#############################################################
+
+import hashlib
+
+# Armazenar isso em um arquivo externo para leitura e escrita
+users = {
+    'andre':{
+        'password': '7c4a8d09ca3762af61e59520943dc26494f8941b' # 123456
+    }
+}
+
+# Função para registrar um usuário
+def register_user(username, password):
+    # Verificar se o nome de usuário já está em uso
+    if username in users:
+        raise ValueError("Nome de usuário já em uso.")
+
+    # Criptografar a senha
+    hashed_password = hash_password(password)
+
+    # Armazenar as informações do usuário
+    users[username] = {
+        'password': hashed_password
+    }
+
+# Função para verificar a senha
+def verify_password(username, password):
+    if username not in users:
+        return False
+
+    stored_password = users[username]['password']
+    hashed_password = hash_password(password)
+    return hashed_password == stored_password
+
+# Função para criptografar a senha
+def hash_password(password):
+    # Usando a função de hash SHA-1 como exemplo
+    sha1 = hashlib.sha1()
+    sha1.update(password.encode('utf-8'))
+    hashed_password = sha1.hexdigest()
+    return hashed_password
+
+############################################################################
+
 # Twin state
 current_temperature = 'void'
 current_light_level = 'void'
@@ -39,10 +83,22 @@ def produce_led_command(state, ledname):
         
 class IoTServer(iot_service_pb2_grpc.IoTServiceServicer):
 
+    # Autentica o usuario antes de qualquer operacao
+    
     def SayTemperature(self, request, context):
+    	if verify_password(request.user, request.password) == False:	
+        	print("Falha na autenticação. Nome de usuário ou senha incorretos.")
+ 			return
+
+    	print("Usuário autenticado com sucesso!")
         return iot_service_pb2.TemperatureReply(temperature=current_temperature)
     
     def BlinkLed(self, request, context):
+		if verify_password(request.user, request.password) == False:	
+	    	print("Falha na autenticação. Nome de usuário ou senha incorretos.")
+ 			return
+
+    	print("Usuário autenticado com sucesso!")
         print ("Blink led ", request.ledname)
         print ("...with state ", request.state)
         produce_led_command(request.state, request.ledname)
@@ -51,6 +107,11 @@ class IoTServer(iot_service_pb2_grpc.IoTServiceServicer):
         return iot_service_pb2.LedReply(ledstate=led_state)
 
     def SayLightLevel(self, request, context):
+    	if verify_password(request.user, request.password) == False:	
+        	print("Falha na autenticação. Nome de usuário ou senha incorretos.")
+ 			return
+
+    	print("Usuário autenticado com sucesso!")
         return iot_service_pb2.LightLevelReply(lightLevel=current_light_level)
 
 def serve():
