@@ -88,7 +88,7 @@ class IoTServer(iot_service_pb2_grpc.IoTServiceServicer):
     def SayTemperature(self, request, context):
     	if verify_password(request.user, request.password) == False:	
         	print("Falha na autenticação. Nome de usuário ou senha incorretos.")
- 			return
+ 		return
 
     	print("Usuário autenticado com sucesso!")
         return iot_service_pb2.TemperatureReply(temperature=current_temperature)
@@ -96,7 +96,7 @@ class IoTServer(iot_service_pb2_grpc.IoTServiceServicer):
     def BlinkLed(self, request, context):
 		if verify_password(request.user, request.password) == False:	
 	    	print("Falha na autenticação. Nome de usuário ou senha incorretos.")
- 			return
+ 		return
 
     	print("Usuário autenticado com sucesso!")
         print ("Blink led ", request.ledname)
@@ -109,7 +109,7 @@ class IoTServer(iot_service_pb2_grpc.IoTServiceServicer):
     def SayLightLevel(self, request, context):
     	if verify_password(request.user, request.password) == False:	
         	print("Falha na autenticação. Nome de usuário ou senha incorretos.")
- 			return
+ 		return
 
     	print("Usuário autenticado com sucesso!")
         return iot_service_pb2.LightLevelReply(lightLevel=current_light_level)
