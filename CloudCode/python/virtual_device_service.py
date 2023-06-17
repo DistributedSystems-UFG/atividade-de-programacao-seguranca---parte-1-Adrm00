@@ -86,19 +86,19 @@ class IoTServer(iot_service_pb2_grpc.IoTServiceServicer):
     # Autentica o usuario antes de qualquer operacao
     
     def SayTemperature(self, request, context):
-    	if verify_password(request.user, request.password) == False:	
-        	print("Falha na autenticação. Nome de usuário ou senha incorretos.")
- 		return
+        if verify_password(request.user, request.password) == False:	
+            print("Falha na autenticação. Nome de usuário ou senha incorretos.")
+            return
 
-    	print("Usuário autenticado com sucesso!")
+        print("Usuário autenticado com sucesso!")
         return iot_service_pb2.TemperatureReply(temperature=current_temperature)
     
     def BlinkLed(self, request, context):
-		if verify_password(request.user, request.password) == False:	
-	    	print("Falha na autenticação. Nome de usuário ou senha incorretos.")
- 		return
+        if verify_password(request.user, request.password) == False:	
+            print("Falha na autenticação. Nome de usuário ou senha incorretos.")
+            return
 
-    	print("Usuário autenticado com sucesso!")
+        print("Usuário autenticado com sucesso!")
         print ("Blink led ", request.ledname)
         print ("...with state ", request.state)
         produce_led_command(request.state, request.ledname)
@@ -107,11 +107,11 @@ class IoTServer(iot_service_pb2_grpc.IoTServiceServicer):
         return iot_service_pb2.LedReply(ledstate=led_state)
 
     def SayLightLevel(self, request, context):
-    	if verify_password(request.user, request.password) == False:	
-        	print("Falha na autenticação. Nome de usuário ou senha incorretos.")
- 		return
+        if verify_password(request.user, request.password) == False:	
+            print("Falha na autenticação. Nome de usuário ou senha incorretos.")
+            return
 
-    	print("Usuário autenticado com sucesso!")
+        print("Usuário autenticado com sucesso!")
         return iot_service_pb2.LightLevelReply(lightLevel=current_light_level)
 
 def serve():
