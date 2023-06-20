@@ -29,6 +29,7 @@ message TemperatureRequest {
 // The response message containing the greetings
 message TemperatureReply {
   string temperature = 1;
+  string state = 2;
 }
 
 message LedRequest {
@@ -40,6 +41,7 @@ message LedRequest {
 
 message LedReply {
   map<string, uint32> ledstate = 1;
+  string state = 2;
 }
 
 message LightLevelRequest {
@@ -50,4 +52,5 @@ message LightLevelRequest {
 
 message LightLevelReply {
   string lightLevel = 1;
+  string state = 2;
 }
