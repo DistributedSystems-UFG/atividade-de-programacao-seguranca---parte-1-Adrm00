@@ -88,15 +88,15 @@ class IoTServer(iot_service_pb2_grpc.IoTServiceServicer):
     def SayTemperature(self, request, context):
         if verify_password(request.username_auth, request.password_auth) == False:	
             print("Falha na autenticação. Nome de usuário ou senha incorretos.")
-            return
+            return iot_service_pb2.TemperatureReply(temperature=current_temperature, state = "ERR")
 
         print("Usuário autenticado com sucesso!")
-        return iot_service_pb2.TemperatureReply(temperature=current_temperature)
+        return iot_service_pb2.TemperatureReply(temperature=current_temperature, state = "OK")
     
     def BlinkLed(self, request, context):
         if verify_password(request.username_auth, request.password_auth) == False:	
             print("Falha na autenticação. Nome de usuário ou senha incorretos.")
-            return
+            return iot_service_pb2.LedReply(ledstate=led_state, state="ERR")
 
         print("Usuário autenticado com sucesso!")
         print ("Blink led ", request.ledname)
@@ -104,15 +104,15 @@ class IoTServer(iot_service_pb2_grpc.IoTServiceServicer):
         produce_led_command(request.state, request.ledname)
         # Update led state of twin
         led_state[request.ledname] = request.state
-        return iot_service_pb2.LedReply(ledstate=led_state)
+        return iot_service_pb2.LedReply(ledstate=led_state, state ="OK")
 
     def SayLightLevel(self, request, context):
         if verify_password(request.username_auth, request.password_auth) == False:	
             print("Falha na autenticação. Nome de usuário ou senha incorretos.")
-            return
+            return iot_service_pb2.LightLevelReply(lightLevel=current_light_level, state = "ERR")
 
         print("Usuário autenticado com sucesso!")
-        return iot_service_pb2.LightLevelReply(lightLevel=current_light_level)
+        return iot_service_pb2.LightLevelReply(lightLevel=current_light_level, state = "OK")
 
 def serve():
     server = grpc.server(futures.ThreadPoolExecutor(max_workers=10))
