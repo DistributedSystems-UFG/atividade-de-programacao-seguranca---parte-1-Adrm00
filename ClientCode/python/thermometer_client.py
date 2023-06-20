@@ -15,8 +15,10 @@ def run():
         stub = iot_service_pb2_grpc.IoTServiceStub(channel)
         response = stub.SayTemperature(iot_service_pb2.TemperatureRequest(sensorName='my_sensor',username_auth=sys.argv[1],password_auth=sys.argv[2]))
 
-    if response:
+    if response.state == "OK":
         print("Temperature received: " + response.temperature)
+    else:
+        print("Falha na autenticação. Nome de usuário ou senha incorretos.")
 
 if __name__ == '__main__':
     logging.basicConfig()
