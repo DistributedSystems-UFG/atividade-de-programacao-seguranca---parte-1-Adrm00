@@ -15,11 +15,13 @@ def run():
         stub = iot_service_pb2_grpc.IoTServiceStub (channel)
         response = stub.BlinkLed(iot_service_pb2.LedRequest(state=int(sys.argv[1]),ledname=sys.argv[2],username_auth=sys.argv[3], password_auth=sys.argv[4]))
 
-    if response:
+    if response.state == "OK":
         if response.ledstate[sys.argv[2]] == 1:
             print("Led state is on")
         else:
             print("Led state is off")
+    else:
+        print("Falha na autenticação. Nome de usuário ou senha incorretos.")
 
 if __name__ == '__main__':
     logging.basicConfig()
